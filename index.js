@@ -12,7 +12,7 @@ app.use(express.json());
 // Conexión a la base de datos MySQL
 async function connectToDatabase() {
   try {
-    const connection = await mysql.createConnection(process.env.DATABASE_URL);
+    const connection = await mysql.createConnection('mysql://l5zjb9nbholzwcm1w4wc:pscale_pw_8qBTxNfmafhJKYYbsUjbAPfrMLpKBQOHZglWS3H1kWk@aws.connect.psdb.cloud/finperbd?ssl={"rejectUnauthorized":true}');
     return connection;
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
@@ -26,7 +26,8 @@ app.use('/categorias', categoriasRouter);
 app.use('/movimientos', movimientosRouter);
 app.use('/', (req, res) => {
   res.send('Bienvenido a la API de gestión de gastos');
-} );
+});
+  
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor Express en funcionamiento en el puerto ${PORT}`);
