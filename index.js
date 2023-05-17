@@ -24,6 +24,9 @@ async function connectToDatabase() {
 app.use('/usuarios', usuariosRouter);
 app.use('/categorias', categoriasRouter);
 app.use('/movimientos', movimientosRouter);
+app.use('/', (req, res) => {
+  res.send('Bienvenido a la API de gestión de gastos');
+} );
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor Express en funcionamiento en el puerto ${PORT}`);
