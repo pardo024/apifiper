@@ -4,7 +4,8 @@ const usuariosRouter = require('./usuarios');
 const categoriasRouter = require('./categorias');
 const movimientosRouter = require('./movimientos');
 const app = express();
-const PORT = 3000;
+
+const PORT = process.env.PORT || 3000;
 
 // Middleware para analizar el cuerpo de las solicitudes HTTP
 app.use(express.json());
