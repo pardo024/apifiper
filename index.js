@@ -14,7 +14,7 @@ app.use(express.json());
 async function connectToDatabase() {
   try {
 
-    const connection = await mysql.createConnection('mysql://vhsn0yybieokfcrgv380:pscale_pw_32ubjuHTfNiNNiv7U1KsX7gqC8cckFyekETnyp2AnyO@aws.connect.psdb.cloud/finperbd?ssl={"rejectUnauthorized":true}');
+    const connection = await mysql.createConnection(process.env.DATABASE_URL);
     return connection;
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
