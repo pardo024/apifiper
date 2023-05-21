@@ -6,11 +6,7 @@ const movimientosRouter = require('./movimientos');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-//desactiva los cors
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+
 // Middleware para analizar el cuerpo de las solicitudes HTTP
 app.use(express.json());
 
