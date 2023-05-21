@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { connectToDatabase } = require('./conexion');
+const { connectToDatabase } = require('./conexion');  
 
 
 
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
     // Realizar la consulta para obtener el último ID de movimiento
     const [rows] = await connection.query('SELECT MAX(idmovimiento) AS id FROM movimientos');
     const newId = rows[0].id + 1;
-    
+
     // Insertar el nuevo registro con el ID incrementado
     await connection.query(
       'INSERT INTO movimientos (idmovimiento, tipo, concepto, idcategoria, idusuario, cantidad, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)',
