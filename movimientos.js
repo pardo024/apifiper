@@ -64,6 +64,7 @@ router.get('/usuario/:idusuario/tipo/:tipo', async (req, res) => {
 
 // Agregar un nuevo movimiento
 router.post('/', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
   const { tipo, concepto, idcategoria, idusuario, cantidad, fecha } = req.body;
 
   try {
