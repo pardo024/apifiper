@@ -4,7 +4,9 @@ require('dotenv').config();
 // Conexión a la base de datos MySQL
 async function connectToDatabase() {
   try {
-    const connection = await mysql.createConnection('mysql://i26yqznfjyg5i2mmyyrk:pscale_pw_xXIkmKgkgQRYWr9WYXfGZjRwFSnZ7N5BUyZABccR0kC@aws.connect.psdb.cloud/finperbd?ssl={"rejectUnauthorized":true}');
+
+    //pscale_pw_30lH5hOsAIRDQW0N6gkLqspUh82S3zKfzG4dcE0vOOX
+    const connection = await mysql.createConnection('mysql://6qx0rqtjgkxdj8xe2foq:pscale_pw_30lH5hOsAIRDQW0N6gkLqspUh82S3zKfzG4dcE0vOOX@aws.connect.psdb.cloud/finperbd?ssl={"rejectUnauthorized":true}');
 
     return connection;
   } catch (error) {
