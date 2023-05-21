@@ -65,6 +65,8 @@ router.get('/usuario/:idusuario/tipo/:tipo', async (req, res) => {
 // Agregar un nuevo movimiento
 router.post('/', async (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   const { tipo, concepto, idcategoria, idusuario, cantidad, fecha } = req.body;
 
   try {
@@ -92,6 +94,9 @@ router.post('/', async (req, res) => {
 
 // Actualizar un movimiento existente
 router.put('/:id', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   const { id } = req.params;
   const { tipo, concepto, idcategoria, idusuario, cantidad, fecha } = req.body;
   try {
@@ -109,6 +114,9 @@ router.put('/:id', async (req, res) => {
 
 // Eliminar un movimiento existente
 router.delete('/:id', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   const { id } = req.params;
   try {
     const connection = await connectToDatabase();
