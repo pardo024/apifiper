@@ -61,6 +61,7 @@ router.get('/usuario/:idusuario/tipo/:tipo', async (req, res) => {
 });
 
 
+
 // Agregar un nuevo movimiento
 router.post('/', async (req, res) => {
   const { tipo, concepto, idcategoria, idusuario, cantidad, fecha } = req.body;
@@ -72,10 +73,13 @@ router.post('/', async (req, res) => {
     const [rows] = await connection.query('SELECT MAX(idmovimiento) AS id FROM movimientos');
     const newId = rows[0].id + 1;
 
+    //realiza una consulta a categorias para obtener el nombre de la categoria en base al idcategoria
+    const [rows2] = await connection.query('SELECT nombre FROM categoria WHERE idcategoria = ?', [idcategoria]);
+    const nombreCategoria = rows2[0].nombre;
     // Insertar el nuevo registro con el ID incrementado
     await connection.query(
-      'INSERT INTO movimientos (idmovimiento, tipo, concepto, idcategoria, idusuario, cantidad, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [newId, tipo, concepto, idcategoria, idusuario, cantidad, fecha]
+      'INSERT INTO movimientos (idmovimiento, tipo, concepto, idcategoria, idusuario, cantidad, fecha, nombreCategoria, icono) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [newId, tipo, concepto, idcategoria, idusuario, cantidad, fecha, nombreCategoria, 'icono']
     );
 
     res.sendStatus(201);

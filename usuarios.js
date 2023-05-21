@@ -69,4 +69,17 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+//obtener id de usuario por correo
+router.get('/correo/:correo', async (req, res) => { 
+  const { correo } = req.params;
+  try {
+    const connection = await connectToDatabase();
+    const [rows] = await connection.query('SELECT idusuario FROM usuarios WHERE correo = ?', [correo]);
+    res.json(rows[0]);
+  } catch (error) {
+    console.error('Error al obtener el usuario:', error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
+  }
+});
+
 module.exports = router;
