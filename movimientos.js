@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { connectToDatabase } = require('./conexion');  
 
+//desactiva los cors
+router.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 
 // Obtener todos los movimientos
