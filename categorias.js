@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
   const { nombre, color } = req.body;
   try {
     const connection = await connectToDatabase();
-    await connection.query('INSERT INTO categoria (nombre, color) VALUES (?, ?)', [nombre, color]);
+    await connection.query('INSERT INTO categoria (idcategoria, nombre, color,idUsuario)  VALUES (?, ?, ?, ?)', [idcategoria, nombre, color,idUsuario]);
     res.sendStatus(201);
   } catch (error) {
     console.error('Error al insertar la categoría:', error);
