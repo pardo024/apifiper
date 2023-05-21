@@ -32,7 +32,9 @@ router.post('/', async (req, res) => {
   const { nombre, correo, urlfoto, password } = req.body;
   try {
     const connection = await connectToDatabase();
-    await connection.query('INSERT INTO usuarios (nombre, correo, urlfoto, password) VALUES (?, ?, ?, ?)', [nombre, correo, urlfoto, password]);
+    const [rows] = await connection.query('SELECT MAX(idusuario) AS id FROM usuarios');
+    const newId = rows[0].id + 1;
+    await connection.query('INSERT INTO usuarios (idusuario,nombre, correo, urlfoto, password) VALUES (?,?, ?, ?, ?)', [newId,nombre, correo, urlfoto, password]);
     res.sendStatus(201);
   } catch (error) {
     console.error('Error al insertar el usuario:', error);

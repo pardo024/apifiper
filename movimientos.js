@@ -1,22 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2/promise');
+const { connectToDatabase } = require('./conexion');
 
-// Conexión a la base de datos MySQL
-async function connectToDatabase() {
-  try {
-    const connection = await connectToDatabase();
-    return connection;
-  } catch (error) {
-    console.error('Error al conectar a la base de datos:', error);
-    throw error;
-  }
-}
+
 
 // Obtener todos los movimientos
 router.get('/', async (req, res) => {
   try {
     const connection = await connectToDatabase();
+  
     const [rows] = await connection.query('SELECT * FROM movimientos');
     res.json(rows);
   } catch (error) {
@@ -67,12 +59,20 @@ router.get('/usuario/:idusuario/tipo/:tipo', async (req, res) => {
 // Agregar un nuevo movimiento
 router.post('/', async (req, res) => {
   const { tipo, concepto, idcategoria, idusuario, cantidad, fecha } = req.body;
+
   try {
     const connection = await connectToDatabase();
+
+    // Realizar la consulta para obtener el último ID de movimiento
+    const [rows] = await connection.query('SELECT MAX(idmovimiento) AS id FROM movimientos');
+    const newId = rows[0].id + 1;
+    
+    // Insertar el nuevo registro con el ID incrementado
     await connection.query(
-      'INSERT INTO movimientos (tipo, concepto, idcategoria, idusuario, cantidad, fecha) VALUES (?, ?, ?, ?, ?, ?)',
-      [tipo, concepto, idcategoria, idusuario, cantidad, fecha]
+      'INSERT INTO movimientos (idmovimiento, tipo, concepto, idcategoria, idusuario, cantidad, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [newId, tipo, concepto, idcategoria, idusuario, cantidad, fecha]
     );
+
     res.sendStatus(201);
   } catch (error) {
     console.error('Error al insertar el movimiento:', error);

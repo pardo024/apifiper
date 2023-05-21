@@ -16,10 +16,12 @@ router.get('/', async (req, res) => {
 
 // Agregar una nueva categoría
 router.post('/', async (req, res) => {
-  const { nombre, color } = req.body;
+  const {nombre, color,idUsuario } = req.body;
   try {
     const connection = await connectToDatabase();
-    await connection.query('INSERT INTO categoria (idcategoria, nombre, color,idUsuario)  VALUES (?, ?, ?, ?)', [idcategoria, nombre, color,idUsuario]);
+    const [rows] = await connection.query('SELECT MAX(idcategoria) AS id FROM categoria');
+    const newId = rows[0].id + 1;
+    await connection.query('INSERT INTO categoria (idcategoria, nombre, color,idUsuario)  VALUES (?, ?, ?, ?)', [newId, nombre, color,idUsuario]);
     res.sendStatus(201);
   } catch (error) {
     console.error('Error al insertar la categoría:', error);
